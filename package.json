@@ -1,0 +1,15 @@
+{
+  "name": "bed-assignment",
+  "version": "1.0.0",
+  "description": "Members: Zhang Lixin (S10258514), Klaris Lim Yong Xin (S10257959), Borra Sri Venkata Surya Nanditha (S10258670), Tan Yu Lin (S10257915)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
