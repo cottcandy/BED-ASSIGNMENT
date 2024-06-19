@@ -1,0 +1,21 @@
+body {
+    background-color: #FFF6DA;
+    margin: 0;
+    padding: 0;
+}
+
+.logo {
+    position: absolute;
+    width: 50px; /* Adjust size as needed */
+    height: auto;
+}
+
+.logo.left {
+    top: 10px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+}
+
+.logo.right {
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+}
