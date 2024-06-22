@@ -1,8 +1,8 @@
 module.exports = {
-    user: "", // Replace with your SQL Server login username
-    password: "", // Replace with your SQL Server login password
+    user: "assignment_klaris", // Replace with your SQL Server login username
+    password: "bedassignment", // Replace with your SQL Server login password
     server: "localhost",
-    database: "",
+    database: "bed_assignment_db",
     trustServerCertificate: true,
     options: {
       port: 1433, // Default SQL Server port
