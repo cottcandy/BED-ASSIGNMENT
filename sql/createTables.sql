@@ -107,18 +107,18 @@ INSERT INTO Administrators (AdminID, AdminEmail, AdminPassword) VALUES
 	('A001', 'admin1@organization.com', 'password123');
 
 INSERT INTO Events (EventType, EventDate, EventTime, EventLocation, AdminID) VALUES
-    ('Healthcare', '2024-07-01', '10am - 12pm', '123 Street', 'A001'),
-    ('CSR', '2024-07-02', '11am - 12.30pm', 'abc road', 'A001'),
-    ('Environment', '2024-07-03', '2pm - 4pm', 'efg', 'A001'),
-    ('Education', '2024-07-04', '8am - 12pm', '456 road', 'A001');
+    ('Healthcare', '2024-07-01', '10am - 12pm', '220 Clementi Ave 4', 'A001'),
+    ('CSR', '2024-07-02', '11am - 12.30pm', '20 Toh Yi Dr', 'A001'),
+    ('Environment', '2024-07-03', '2pm - 4pm', 'Coney Island Park', 'A001'),
+    ('Education', '2024-07-04', '8am - 12pm', '36 Holland Dr, Singapore 270036', 'A001');
 
 INSERT INTO Posts (Title, Content, PictureURL, NewEventID, EventType, EventDate, EventTime, EventLocation, AdminID) VALUES
-    ('Healthcare Event', 'Details about healthcare event...', 'http://example.com/healthcare.jpg', 'H001', 'Healthcare', '2024-07-01', '10am - 12pm', '123 Street', 'A001'),
-    ('CSR Event', 'Details about CSR event...', 'http://example.com/csr.jpg', 'C002','CSR', '2024-07-02', '11am - 12.30pm', 'abc road', 'A001');
+    ('Healthcare Event', 'Details about healthcare event...', 'https://www.skh.com.sg/about-us/working-with-our-community/PublishingImages/Helping_Hands.jpg', 'H001', 'Healthcare', '2024-07-01', '10am - 12pm', '220 Clementi Ave 4', 'A001'),
+    ('CSR Event', 'Details about CSR event...', 'https://cdn.prod.website-files.com/5f6c5abb4a1622516fb569b6/62309f7e0a876a7c615268dc_cleanups-header.jpg', 'C002','CSR', '2024-07-02', '11am - 12.30pm', '20 Toh Yi Dr', 'A001');
 
 INSERT INTO Volunteers (EventType, NewEventID, EventDate, EventTime, EventLocation, NewMemberID) VALUES
-	('Healthcare', 'H001', '2024-07-01', '10am - 12pm', '123 Street', 'M001'),
-	('CSR', 'C002', '2024-07-02', '11am - 12.30pm', 'abc road', 'M002');
+	('Healthcare', 'H001', '2024-07-01', '10am - 12pm', '220 Clementi Ave 4', 'M001'),
+	('CSR', 'C002', '2024-07-02', '11am - 12.30pm', '20 Toh Yi Dr', 'M002');
 
 INSERT INTO Donations(DonationAmount, EventType) VALUES
 	('10', 'CSR'),
