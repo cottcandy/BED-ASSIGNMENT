@@ -1,9 +1,12 @@
 const Joi = require("joi");
 
-const validateBook = (req, res, next) => {
+const validateEvent = (req, res, next) => {
   const schema = Joi.object({
-    title: Joi.string().min(3).max(50).required(),
-    author: Joi.string().min(3).max(50).required(),
+    EventType: Joi.string().valid('Healthcare', 'CSR', 'Environment', 'Education').required(),
+    EventDate: Joi.date().required(),
+    EventTime: Joi.string().required(),
+    EventLocation: Joi.string().min(3).max(50).required(),
+    AdminID: Joi.string().pattern(/^A\d{3}$/).required(), 
   });
 
   const validation = schema.validate(req.body, { abortEarly: false }); // Validate request body
@@ -17,4 +20,4 @@ const validateBook = (req, res, next) => {
   next(); // If validation passes, proceed to the next route handler
 };
 
-module.exports = validateBook;
+module.exports = validateEvent;

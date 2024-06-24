@@ -1,10 +1,20 @@
 const express = require("express");
-const booksController = require("./controllers/booksController");
-const sql = require("mssql"); // Assuming you've installed mssql
-const dbConfig = require("./dbConfig");
-const bodyParser = require("body-parser"); // Import body-parser
-const validateBook = require("./middlewares/validateBook");
-const usersController = require("./controllers/usersController");
+const sql = require("mssql");
+const bodyParser = require("body-parser");
+// Klaris
+
+
+// Lixin
+const eventController = require("./lixin_events/controllers/eventController");
+const lixin_dbConfig = require("./lixin_events/dbConfig/lixin_dbConfig");
+const validateEvent = require("./lixin_events/middlewares/validateEvent");
+
+// Nanditha
+
+
+// Yulin
+
+
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -16,25 +26,28 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 app.use(staticMiddleware); // Mount the static middleware
 
-// Routes for GET requests (replace with appropriate routes for update and delete later)
-app.get("/books", booksController.getAllBooks);
-app.get("/books/:id", booksController.getBookById);
-app.post("/books", validateBook, booksController.createBook); // POST for creating books (can handle JSON data)
-app.put("/books/:id", validateBook, booksController.updateBook); // PUT for updating books
-app.delete("/books/:id", booksController.deleteBook); // DELETE for deleting books
 
-app.post("/users", usersController.createUser); // Create user
-app.get("/users", usersController.getAllUsers); // Get all users
-app.get("/users/search", usersController.searchUsers);
-app.get("/users/with-books", usersController.getUsersWithBooks);
-app.get("/users/:id", usersController.getUserById); // Get user by ID
-app.put("/users/:id", usersController.updateUser); // Update user
-app.delete("/users/:id", usersController.deleteUser); // Delete user
+// Routes (Klaris)
+
+
+// Routes (Lixin)
+app.get("/events", eventController.getAllEvents);
+app.get("/events/:id", eventController.getEventById);
+app.post("/events", validateEvent, eventController.createEvent);
+app.put("/events/:id", validateEvent, eventController.updateEvent); 
+app.delete("/events/:id", eventController.deleteEvent); // DELETE an event
+
+// Routes (Nanditha)
+
+
+// Routes (Yulin)
+
+
 
 app.listen(port, async () => {
   try {
     // Connect to the database
-    await sql.connect(dbConfig);
+    await sql.connect(lixin_dbConfig); // ** not sure abt this
     console.log("Database connection established successfully");
   } catch (err) {
     console.error("Database connection error:", err);

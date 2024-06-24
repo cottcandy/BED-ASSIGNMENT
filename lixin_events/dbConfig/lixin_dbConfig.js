@@ -1,6 +1,6 @@
 module.exports = {
-    user: "assignment_lixin", // Replace with your SQL Server login username
-    password: "29F988352t05", // Replace with your SQL Server login password
+    user: "assignment_lixin",
+    password: "29F988352t05",
     server: "localhost",
     database: "bed_assignment_db",
     trustServerCertificate: true,
