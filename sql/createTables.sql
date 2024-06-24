@@ -98,26 +98,7 @@ CREATE TABLE Donations (
 	CONSTRAINT FK_Donations_MemberID FOREIGN KEY (NewMemberID) REFERENCES Members(NewMemberID)
 ); 
 
-/*
-INSERT INTO Members (MemberEmail, FirstName, LastName, MemberPassword, Birthday, PhoneNumber) VALUES
-    ('john123@email.com', 'John', 'Wong', 'johnwong123@', '12/03/2001', '98765432'),
-    ('brucelee@email.com', 'Bruce', 'Lee', 'bruceee@1234', '04/01/1998', '87654321');
 
-INSERT INTO Administrators (AdminID, AdminEmail, AdminPassword) VALUES
-	('A001', 'S12345678@connect.np.edu.sg', 'S12345678@!8');
-
-INSERT INTO Events (EventID, EventType, EventDate, EventTime) VALUES
-	();
-
-INSERT INTO Posts (PostID, Title, Content, PictureURL, PostedOn) VALUES
-	();
-
-INSERT INTO Volunteers (VolunteerID) VALUES
-	();
-
-INSERT INTO Donations (DonationID) VALUES
-	();
-*/
 INSERT INTO Members (MemberEmail, FirstName, LastName, MemberPassword, Birthday, PhoneNumber) VALUES
     ('john123@email.com', 'John', 'Wong', 'johnwong123@', '2001-03-12', '98765432'),
     ('brucelee@email.com', 'Bruce', 'Lee', 'bruceee@1234', '1998-01-04', '87654321');
