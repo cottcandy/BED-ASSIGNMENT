@@ -59,7 +59,9 @@ For all the pages, if the user wishes to go back to index.html, the user can cli
 
 - chatbot: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.co.uk%2Fpin%2F368802656993027699%2F&psig=AOvVaw1e950m888jZtxmWvY7SpwH&ust=1716649799698000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPiwhInJpoYDFQAAAAAdAAAAABAK
 
-- post photo: https://www.greennudge.sg/cleanups 
+  post photo:
+- https://www.greennudge.sg/cleanups
+- https://www.skh.com.sg/about-us/working-with-our-community/PublishingImages/Helping_Hands.jpg
  
 - logo: https://in.pinterest.com/pin/163537030204906569/
 
