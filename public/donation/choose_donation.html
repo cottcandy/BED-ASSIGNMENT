@@ -6,7 +6,6 @@
     <title>Donation</title>
     <link rel="stylesheet" href="../styles/normalise.css">
     <link rel="stylesheet" href="../styles/style.css">
-
 </head>
 <body>
     <div class="beehivelogo">
@@ -17,21 +16,49 @@
     </div>
     <nav class="navbar">
         <ul>
-            <li><a href="#chooseDonation">Choose Donation</a></li>
-            <li><a href="#donationPayments">Donation Payments</a></li>
-            <li><a href="#donationRecords">Donation Records</a></li>
+            <li><a href="choose_donation.html" class="active">Choose Donation</a></li>
+            <li><a href="payment_donation.html">Donation Payments</a></li>
+            <li><a href="donation_records.html">Donation Records</a></li>
         </ul>
     </nav>
 
     <div class="eventbox">
-        
+        <div class="left-section">
+            <p><b>Choose an event that you would like to donate:</b></p>
+            <form id="eventForm">
+                <input type="radio" id="environment" name="event" value="environment">
+                <label for="environment">Environment</label><br>
+                <input type="radio" id="healthcare" name="event" value="healthcare">
+                <label for="healthcare">Healthcare</label><br>
+                <input type="radio" id="education" name="event" value="education">
+                <label for="education">Education</label><br>
+                <input type="radio" id="csr" name="event" value="csr">
+                <label for="csr">Corporate Social Responsibility (CSR)</label><br>
+            </form>
+        </div>
+        <div class="right-section">
+            <div class="yellow-box">
+                <p><b>Please choose the donation amount:</b></p>
+                <form id="amountForm">
+                    <input type="radio" id="five" name="amount" value="5">
+                    <label for="five">$5</label><br>
+                    <input type="radio" id="ten" name="amount" value="10">
+                    <label for="ten">$10</label><br>
+                    <input type="radio" id="twenty" name="amount" value="20">
+                    <label for="twenty">$20</label><br>
+                    <input type="radio" id="fifty" name="amount" value="50">
+                    <label for="fifty">$50</label><br>
+                </form>
+                <button onclick="location.href='../donation/payment_donation.html'">Next</button>
+            </div>
+        </div>
     </div>
     
-    
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-navbar">
+        <div class="bottom-nav-content">
+            <p>Any suggestions or feedback? email us!</p>
+        </div>
+    </nav>
 </body>
 </html>
-
-
-
-
-
