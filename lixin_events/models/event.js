@@ -10,9 +10,10 @@ class Event {
     this.eventLocation = eventLocation;
     this.adminID = adminID;
   }
-
-  static async getEventByID(eventID) {
+  
+  static async getEventById(eventID) {
     try {
+      console.log(`Getting event with ID: ${eventID}`);
       const connection = await sql.connect(dbConfig);
       const query = `
         SELECT *
@@ -20,21 +21,25 @@ class Event {
         WHERE EventID = @eventID
       `;
       const result = await connection.request()
-        .input('eventID', eventID)
+        .input('EventID', sql.Int, eventID)
         .query(query);
       
+      console.log("Query executed successfully");
+      console.log("Result:", result.recordset);
+  
       if (result.recordset.length > 0) {
-        const { EventID, EventType, EventDate, EventTime, EventLocation, AdminID } = result.recordset[0];
-        return new Event(EventID, EventType, EventDate, EventTime, EventLocation, AdminID);
+        const { eventID, eventType, eventDate, eventTime, eventLocation, adminID } = result.recordset[0];
+        return new Event(eventID, eventType, eventDate, eventTime, eventLocation, adminID);
       } else {
         throw new Error(`Event with ID ${eventID} not found`);
       }
     } catch (error) {
+      console.error(`Error retrieving event: ${error.message}`);
       throw new Error(`Error retrieving event: ${error.message}`);
     } finally {
       await sql.close();
     }
-  }
+  }  
 
   static async getAllEvents() {
     try {
@@ -45,7 +50,7 @@ class Event {
         ORDER BY EventDate DESC, EventTime ASC
       `;
       const result = await connection.request().query(query);
-      
+
       const events = result.recordset.map(row => {
         const { EventID, EventType, EventDate, EventTime, EventLocation, AdminID } = row;
         return new Event(EventID, EventType, EventDate, EventTime, EventLocation, AdminID);
@@ -68,17 +73,50 @@ class Event {
         SELECT SCOPE_IDENTITY() AS eventID;
       `;
       const result = await connection.request()
-        .input('eventType', eventData.eventType)
-        .input('eventDate', eventData.eventDate)
-        .input('eventTime', eventData.eventTime)
-        .input('eventLocation', eventData.eventLocation)
-        .input('adminID', eventData.adminID)
+        .input('eventType', sql.NVarChar, eventData.eventType)
+        .input('eventDate', sql.Date, eventData.eventDate)
+        .input('eventTime', sql.NVarChar, eventData.eventTime)
+        .input('eventLocation', sql.NVarChar, eventData.eventLocation)
+        .input('adminID', sql.NVarChar, eventData.adminID)
         .query(query);
 
       const eventID = result.recordset[0].eventID;
-      return await this.getEventByID(eventID);
+      return await this.getEventById(eventID);
     } catch (error) {
       throw new Error(`Error creating event: ${error.message}`);
+    } finally {
+      await sql.close();
+    }
+  }
+
+  static async updateEvent(eventID, eventData) {
+    try {
+      const connection = await sql.connect(dbConfig);
+      const query = `
+        UPDATE Events
+        SET EventType = @eventType,
+            EventDate = @eventDate,
+            EventTime = @eventTime,
+            EventLocation = @eventLocation,
+            AdminID = @adminID
+        WHERE EventID = @eventID
+      `;
+      const result = await connection.request()
+        .input('eventID', sql.Int, eventID)
+        .input('eventType', sql.NVarChar, eventData.eventType)
+        .input('eventDate', sql.Date, eventData.eventDate)
+        .input('eventTime', sql.NVarChar, eventData.eventTime)
+        .input('eventLocation', sql.NVarChar, eventData.eventLocation)
+        .input('adminID', sql.NVarChar, eventData.adminID)
+        .query(query);
+
+      if (result.rowsAffected[0] > 0) {
+        return await this.getEventById(eventID);
+      } else {
+        throw new Error(`Event with ID ${eventID} not found`);
+      }
+    } catch (error) {
+      throw new Error(`Error updating event: ${error.message}`);
     } finally {
       await sql.close();
     }
@@ -92,10 +130,10 @@ class Event {
         WHERE EventID = @eventID
       `;
       const result = await connection.request()
-        .input('eventID', eventID)
+        .input('eventID', sql.Int, eventID)
         .query(query);
 
-      return result.rowsAffected > 0;
+      return result.rowsAffected[0] > 0;
     } catch (error) {
       throw new Error(`Error deleting event: ${error.message}`);
     } finally {
