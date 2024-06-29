@@ -1,8 +1,6 @@
 const sql = require("mssql");
-const dbConfig = require("../dbConfigs/dbConfig.js");
+const dbConfig = require("../dbConfig/nanditha_dbConfig");
 
-const sql = require("mssql");
-const dbConfig = require("../dbConfigs/dbConfig.js");
 
 class Member {
   constructor(memberID, memberEmail, firstName, lastName, memberPassword, birthday, phoneNumber) {

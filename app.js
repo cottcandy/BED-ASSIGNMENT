@@ -10,7 +10,9 @@ const lixin_dbConfig = require("./lixin_events/dbConfig/lixin_dbConfig");
 const validateEvent = require("./lixin_events/middlewares/validateEvent");
 
 // Nanditha
-
+// const memberController = require("./nanditha_member/controllers/memberController");
+// const nanditha_dbConfig = require("./nanditha_member/dbConfig/nanditha_dbConfig");
+// const validateMember = require("./nanditha_member/middlewares/validateMember");
 
 // Yulin
 
@@ -38,7 +40,11 @@ app.put("/events/:id", validateEvent, eventController.updateEvent);
 app.delete("/events/:id", eventController.deleteEvent); // DELETE an event
 
 // Routes (Nanditha)
-
+// app.get("/members", memberController.getAllMembers);
+// app.get("/members/:id", memberController.getMemberById);
+// app.post("/members", validateMember, memberController.createMember);
+// app.put("/members/:id", validateMember, memberController.updateMember);
+// app.delete("/members/:id", memberController.deleteMember);
 
 // Routes (Yulin)
 
