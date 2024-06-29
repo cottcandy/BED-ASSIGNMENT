@@ -1,99 +1,33 @@
-const User = require("../models/admin");
+const Post = require('../models/post');
+const validatePost = require('../middlewares/validatePost');
+const validateAdmin = require('../middlewares/validateAdmin');
 
-async function getUsersWithBooks(req, res) {
+const loginAdmin = async (req, res) => {
+    const { email, password } = req.body;
     try {
-      const users = await User.getUsersWithBooks();
-      res.json(users);
+      const admin = await Admin.login(email, password);
+      if (!admin) {
+        return res.status(401).send("Invalid email or password");
+      }
+      res.json(admin);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Error fetching users with books" });
+      res.status(500).send("Error logging in admin");
     }
-  }
-
-const createUser = async (req, res) => {
-    const user = req.body;
-    try {
-        const createdUser = await User.createUser(user);
-        res.status(201).json(createdUser);
-    }catch (error) {
-        console.error(error);
-        res.status(500).send("Error creating user")
-    }
-};
-
-const getAllUsers = async (req, res) => {
-    try {
-        const users = await User.getAllUsers();
-        res.json(users);
-    }catch (error) {
-        console.error(error);
-        res.status(500).send("Error retrieving users")
-    }
-};
-
-const getUserById = async (req, res) => {
-    const userId = parseInt(req.params.id);
-    try{
-        const id = await User.getUserById(userId);
-        if(!id) {
-            return res.status(404).send("User not found")
-        }
-        res.json(id)
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error retrieving user")
-    }
-};
-
-const updateUser = async (req, res) => {
-    const userId = parseInt(req.params.id);
-    const newUserData = req.body;
+  };
   
+  const getAdminPosts = async (req, res) => {
+    const adminId = req.params.id;
     try {
-      const updatedUser = await Book.updateBook(userId, newUserData);
-      if (!updatedUser) {
-        return res.status(404).send("User not found");
-      }
-      res.json(updatedUser);
+      const posts = await Post.getPostsByAdmin(adminId);
+      res.json(posts);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Error updating user");
+      res.status(500).send("Error retrieving posts");
     }
-};
-
-const deleteUser = async (req, res) => {
-    const userId = parseInt(req.params.id);
-    
-    try {
-      const success = await Book.deleteBook(userId);
-      if (!success) {
-        return res.status(404).send("User not found");
-      }
-      res.status(204).send();
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error deleting user");
-    }
-};
-
-async function searchUsers(req, res) {
-  const searchTerm = req.query.searchTerm; // Extract search term from query params
-
-  try {    
-    const users = await User.searchUsers(searchTerm);
-    res.json(users);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error searching users" });
-  }
-};
-
-module.exports = {
-    createUser,
-    getAllUsers,
-    getUserById,
-    updateUser,
-    deleteUser,
-    searchUsers,
-    getUsersWithBooks,
-}
+  };
+  
+  module.exports = {
+    loginAdmin,
+    getAdminPosts,
+  };

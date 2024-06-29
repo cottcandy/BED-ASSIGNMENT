@@ -3,11 +3,15 @@ const sql = require("mssql");
 const bodyParser = require("body-parser");
 // Klaris
 
+const postController = require('./klaris_admin/controllers/postController');
+const adminController = require('./klaris_admin/controllers/adminController');
+const validatePost = require('./klaris_admin/middlewares/validatePost');
 
 // Lixin
 const eventController = require("./lixin_events/controllers/eventController");
 const lixin_dbConfig = require("./lixin_events/dbConfig/lixin_dbConfig");
 const validateEvent = require("./lixin_events/middlewares/validateEvent");
+const klaris_dbConfig = require("./klaris_admin/dbConfig/klaris_dbConfig");
 
 // Nanditha
 
@@ -28,7 +32,13 @@ app.use(staticMiddleware); // Mount the static middleware
 
 
 // Routes (Klaris)
+app.get('/posts', postController.getAllPosts);
+app.get('/posts/:id', postController.getPostById);
+app.post('/posts', validatePost, postController.createPost);
+app.delete('/posts/:id', postController.deletePost);
 
+app.post('/admin/login', adminController.loginAdmin);
+app.get('/admin/:id/posts', adminController.getAdminPosts);
 
 // Routes (Lixin)
 app.get("/events", eventController.getAllEvents);
@@ -47,7 +57,7 @@ app.delete("/events/:id", eventController.deleteEvent); // DELETE an event
 app.listen(port, async () => {
   try {
     // Connect to the database
-    await sql.connect(lixin_dbConfig); // ** not sure abt this
+    await sql.connect(klaris_dbConfig); // ** not sure abt this
     console.log("Database connection established successfully");
   } catch (err) {
     console.error("Database connection error:", err);

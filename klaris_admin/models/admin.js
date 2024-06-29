@@ -1,84 +1,27 @@
 const sql = require("mssql");
-const dbConfig = require("../dbConfigs/dbConfig.js");
-
+const dbConfig = require('../dbConfig/klaris_dbConfig');
 class Admin {
-    constructor(AdminID, AdminEmail, AdminPassword) {
-        this.AdminID = AdminID;
-        this.AdminEmail = AdminEmail;
-        this.AdminPassword = AdminPassword
+    constructor(adminID, email, password) {
+        this.adminID = adminID;
+        this.email = email;
+        this.password = password;
     }
-    static async getAllBooks() {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `SELECT * FROM Books`; // Replace with your actual table name
-    
-        const request = connection.request();
-        const result = await request.query(sqlQuery);
-    
-        connection.close();
-    
-        return result.recordset.map(
-          (row) => new Book(row.id, row.title, row.author)
-        ); // Convert rows to Book objects
-      }
-    
-      static async getBookById(id) {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `SELECT * FROM Books WHERE id = @id`; // Parameterized query
-    
-        const request = connection.request();
-        request.input("id", id);
-        const result = await request.query(sqlQuery);
-      }
-    
-      static async createBook(newBookData) {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `INSERT INTO Books (title, author) VALUES (@title, @author); SELECT SCOPE_IDENTITY() AS id;`; // Retrieve ID of inserted record
-    
-        const request = connection.request();
-        request.input("title", newBookData.title);
-        request.input("author", newBookData.author);
-    
-        const result = await request.query(sqlQuery);
-        
-        connection.close();
-    
-        // Retrieve the newly created book using its ID
-        return this.getBookById(result.recordset[0].id);
-      }
-    
-      static async updateBook(id, newBookData) {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `UPDATE Books SET title = @title, author = @author WHERE id = @id`; // Parameterized query
-    
-        const request = connection.request();
-        request.input("id", id);
-        request.input("title", newBookData.title || null); // Handle optional fields
-        request.input("author", newBookData.author || null);
-    
-        await request.query(sqlQuery);
-    
-        connection.close();
-    
-        return this.getBookById(id); // returning the updated book data
-      }
-    
-      static async deleteBook(id) {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `DELETE FROM Books WHERE id = @id`; // Parameterized query
-    
-        const request = connection.request();
-        request.input("id", id);
-        const result = await request.query(sqlQuery);
-    
-        connection.close();
-    
-        return result.rowsAffected > 0; // Indicate success based on affected rows
-      }
+
+    static async login(email, password) {
+        const [admin] = await db.query('SELECT * FROM Administrators WHERE AdminEmail = ? AND AdminPassword = ?', [email, password]);
+        if (admin) {
+            return new Admin(admin.AdminID, admin.AdminEmail, admin.AdminPassword);
+        }
+        return null;
     }
-    
-    module.exports = Book;
+
+    static async loginByID(adminID, password) {
+        const [admin] = await db.query('SELECT * FROM Administrators WHERE AdminID = ? AND AdminPassword = ?', [adminID, password]);
+        if (admin) {
+            return new Admin(admin.AdminID, admin.AdminEmail, admin.AdminPassword);
+        }
+        return null;
+    }
+}
+
+module.exports = Admin;
