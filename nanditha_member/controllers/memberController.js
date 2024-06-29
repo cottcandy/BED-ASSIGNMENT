@@ -1,94 +1,94 @@
-const User = require("../models/user");
+const Member = require("../models/member");
 
-// Create User 
-const createUser = async (req, res) => {
-    const user = req.body;
+// Create Member 
+const createMember = async (req, res) => {
+    const memberData = req.body;
     try {
-        const createdUser = await User.createUser(user);
-        res.status(201).json(createdUser);
+        const createdMember = await Member.create(memberData);
+        res.status(201).json(createdMember);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Error creating user");
+        res.status(500).send("Error creating member");
     }
 };
 
-// Login User 
-const loginUser = async (req, res) => {
+// Login Member 
+const loginMember = async (req, res) => {
     const { email, password } = req.body;
     try {
-        const user = await User.loginUser(email, password);
-        if (!user) {
+        const member = await Member.login(email, password);
+        if (!member) {
             return res.status(401).send("Invalid email or password");
         }
-        res.json(user);
+        res.json(member);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Error logging in user");
+        res.status(500).send("Error logging in member");
     }
 };
 
-// Get All Users 
-const getAllUsers = async (req, res) => {
+// Get All Members 
+const getAllMembers = async (req, res) => {
     try {
-        const users = await User.getAllUsers();
-        res.json(users);
+        const members = await Member.find();
+        res.json(members);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Error retrieving users");
+        res.status(500).send("Error retrieving members");
     }
 };
 
-// Get User by ID
-const getUserById = async (req, res) => {
-    const userId = req.params.id;
+// Get Member by ID
+const getMemberById = async (req, res) => {
+    const memberId = req.params.id;
     try {
-        const user = await User.getUserById(userId);
-        if (!user) {
-            return res.status(404).send("User not found");
+        const member = await Member.findById(memberId);
+        if (!member) {
+            return res.status(404).send("Member not found");
         }
-        res.json(user);
+        res.json(member);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Error retrieving user");
+        res.status(500).send("Error retrieving member");
     }
 };
 
-// Update User by ID
-const updateUser = async (req, res) => {
-    const userId = req.params.id;
-    const newUserData = req.body;
+// Update Member by ID
+const updateMember = async (req, res) => {
+    const memberId = req.params.id;
+    const newMemberData = req.body;
     try {
-        const updatedUser = await User.updateUser(userId, newUserData);
-        if (!updatedUser) {
-            return res.status(404).send("User not found");
+        const updatedMember = await Member.findByIdAndUpdate(memberId, newMemberData, { new: true });
+        if (!updatedMember) {
+            return res.status(404).send("Member not found");
         }
-        res.json(updatedUser);
+        res.json(updatedMember);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Error updating user");
+        res.status(500).send("Error updating member");
     }
 };
 
-// Delete User by ID
-const deleteUser = async (req, res) => {
-    const userId = req.params.id;
+// Delete Member by ID
+const deleteMember = async (req, res) => {
+    const memberId = req.params.id;
     try {
-        const success = await User.deleteUser(userId);
-        if (!success) {
-            return res.status(404).send("User not found");
+        const deletedMember = await Member.findByIdAndDelete(memberId);
+        if (!deletedMember) {
+            return res.status(404).send("Member not found");
         }
         res.status(204).send();
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Error deleting user");
+        res.status(500).send("Error deleting member");
     }
 };
 
 module.exports = {
-    createUser,
-    loginUser,
-    getAllUsers,
-    getUserById,
-    updateUser,
-    deleteUser,
+    createMember,
+    loginMember,
+    getAllMembers,
+    getMemberById,
+    updateMember,
+    deleteMember,
 };
