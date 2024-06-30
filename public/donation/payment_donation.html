@@ -25,7 +25,35 @@
     
     <div class="eventbox2">
         <p class="center-text">Payment Transaction</p>
+        <div class="image-container">
+            <img src="../logo/visalogo.png" alt="Payment Image 1" class="small-img">
+            <img src="../logo/mastercardlogo.png" alt="Payment Image 2" class="small-img">
+        </div>
+        <div class="cardholder-container">
+            <input type="text" id="cardholder-name" name="cardholder-name" placeholder="CardHolder Name" required>
+        </div>
+        <div class="card-details-container">
+            <input type="text" id="card-number" name="card-number" placeholder="Card Number" required>
+            <input type="text" id="exp-date" name="exp-date" placeholder="MM/YY" required>
+            <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
+        </div>
+        <div class="phone-and-code-container">
+            <div class="phone-number-container">
+                <input type="text" id="phone-number" name="phone-number" placeholder="Phone Number" required>
+            </div>
+            <span class="send-code-text">SEND CODE</span>
+            <div class="send-code-container">
+                <input type="text" id="send-code" name="send-code" placeholder="Code" required>
+            </div>
+        </div>
+        <div class="go-back-container">
+            <a href="choose_donation.html" class="go-back-link"><u>Go Back</u></a>
+        </div>
+        <div class="confirm-button-container">
+            <a href="payment_success_donation.html" class="confirm-button">Confirm</a>        
+        </div>
     </div>
+    
     
     <!-- Bottom Navigation Bar -->
     <nav class="bottom-navbar">
@@ -35,3 +63,4 @@
     </nav>
 </body>
 </html>
+
