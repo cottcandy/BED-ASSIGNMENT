@@ -19,6 +19,9 @@ const klaris_dbConfig = require("./klaris_admin/dbConfig/klaris_dbConfig");
 // const validateMember = require("./nanditha_member/middlewares/validateMember");
 
 // Yulin
+const donationController = require("./yulin_donation/controllers/donationController");
+const yulin_dbConfig = require("./yulin_donation/dbConfig/yulin_dbConfig");
+const validateDonation = require("./yulin_donation/middlewares/validateDonation");
 
 
 
@@ -57,7 +60,10 @@ app.delete("/events/:id", eventController.deleteEvent); // DELETE an event
 // app.delete("/members/:id", memberController.deleteMember);
 
 // Routes (Yulin)
-
+// app.get("/donations", donationController.getAllDonationsByMemberID);
+// app.get("/donations/:id", donationController.getDonationByID);
+// app.post("/donations", validateDonation, donationController.createDonation);
+// app.put("/donations/:id", validateDonation, donationController.updateDonation);
 
 
 app.listen(port, async () => {
