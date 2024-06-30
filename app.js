@@ -2,7 +2,6 @@ const express = require("express");
 const sql = require("mssql");
 const bodyParser = require("body-parser");
 // Klaris
-
 const postController = require('./klaris_admin/controllers/postController');
 const adminController = require('./klaris_admin/controllers/adminController');
 const validatePost = require('./klaris_admin/middlewares/validatePost');
@@ -39,8 +38,8 @@ app.get('/posts/:id', postController.getPostById);
 app.post('/posts', validatePost, postController.createPost);
 app.delete('/posts/:id', postController.deletePost);
 
-app.post('/admin/login', adminController.loginAdmin);
-app.get('/admin/:id/posts', adminController.getAdminPosts);
+/*app.post('/admin/login', adminController.loginAdmin);
+app.get('/admin/:id/posts', adminController.getAdminPosts);*/
 
 // Routes (Lixin)
 app.get("/events", eventController.getAllEvents);

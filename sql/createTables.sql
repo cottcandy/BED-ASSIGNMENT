@@ -15,7 +15,7 @@ CREATE TABLE Members (
 	LastName		VARCHAR(50)		NOT NULL,
 	MemberPassword	CHAR(12)		NOT NULL UNIQUE,
 	Birthday		DATE			NOT NULL,
-	PhoneNumber		VARCHAR(20)		NOT NULL UNIQUE,
+	PhoneNumber		CHAR(8)		NOT NULL UNIQUE,
 	CONSTRAINT PK_Members PRIMARY KEY (NewMemberID)
 );
 
