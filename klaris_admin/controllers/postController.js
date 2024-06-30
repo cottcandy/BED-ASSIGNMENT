@@ -1,5 +1,4 @@
 const Post = require('../models/post');
-const validatePost = require('../middlewares/validatePost');
 
 const getAllPosts = async (req, res) => {
   try {
@@ -12,7 +11,7 @@ const getAllPosts = async (req, res) => {
 };
 
 const getPostById = async (req, res) => {
-  const postId = parseInt(req.params.id);
+  const postId = req.params.id; // Use req.params.id directly
   try {
     const post = await Post.getPostById(postId);
     if (!post) {
@@ -26,21 +25,19 @@ const getPostById = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  const newPost = req.body;
   try {
-    const createdPost = await Post.createPost(newPost);
-    res.status(201).json(createdPost);
+    const newPostData = req.body;
+    const newPost = await Post.createPost(newPostData);
+    res.status(201).json(newPost);
   } catch (error) {
     console.error(error);
     res.status(500).send("Error creating post");
   }
 };
 
-
 const deletePost = async (req, res) => {
-  const postId = parseInt(req.params.id);
-
   try {
+    const postId = req.params.id; // Use req.params.id directly
     const success = await Post.deletePost(postId);
     if (!success) {
       return res.status(404).send("Post not found");

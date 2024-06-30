@@ -2,16 +2,16 @@ const express = require("express");
 const sql = require("mssql");
 const bodyParser = require("body-parser");
 // Klaris
-
 const postController = require('./klaris_admin/controllers/postController');
-const adminController = require('./klaris_admin/controllers/adminController');
+//const adminController = require('./klaris_admin/controllers/adminController');
 const validatePost = require('./klaris_admin/middlewares/validatePost');
+const klaris_dbConfig = require("./klaris_admin/dbConfig/klaris_dbConfig");
 
 // Lixin
 const eventController = require("./lixin_events/controllers/eventController");
 const lixin_dbConfig = require("./lixin_events/dbConfig/lixin_dbConfig");
 const validateEvent = require("./lixin_events/middlewares/validateEvent");
-const klaris_dbConfig = require("./klaris_admin/dbConfig/klaris_dbConfig");
+
 
 // Nanditha
 // const memberController = require("./nanditha_member/controllers/memberController");
@@ -42,8 +42,8 @@ app.get('/posts/:id', postController.getPostById);
 app.post('/posts', validatePost, postController.createPost);
 app.delete('/posts/:id', postController.deletePost);
 
-app.post('/admin/login', adminController.loginAdmin);
-app.get('/admin/:id/posts', adminController.getAdminPosts);
+/*app.post('/admin/login', adminController.loginAdmin);
+app.get('/admin/:id/posts', adminController.getAdminPosts);*/
 
 // Routes (Lixin)
 app.get("/events", eventController.getAllEvents);
