@@ -19,9 +19,9 @@ const klaris_dbConfig = require("./klaris_admin/dbConfig/klaris_dbConfig");
 // const validateMember = require("./nanditha_member/middlewares/validateMember");
 
 // Yulin
-const donationController = require("./yulin_donation/controllers/donationController");
-const yulin_dbConfig = require("./yulin_donation/dbConfig/yulin_dbConfig");
-const validateDonation = require("./yulin_donation/middlewares/validateDonation");
+// const donationController = require("./yulin_donation/controllers/donationController");
+// const yulin_dbConfig = require("./yulin_donation/dbConfig/yulin_dbConfig");
+// const validateDonation = require("./yulin_donation/middlewares/validateDonation");
 
 
 
