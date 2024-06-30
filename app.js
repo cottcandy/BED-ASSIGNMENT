@@ -60,7 +60,7 @@ app.delete("/events/:id", eventController.deleteEvent); // DELETE an event
 // app.delete("/members/:id", memberController.deleteMember);
 
 // Routes (Yulin)
-// app.get("/donations", donationController.getAllDonationsByMemberID);
+// app.get("/donations", donationController.getAllDonations);
 // app.get("/donations/:id", donationController.getDonationByID);
 // app.post("/donations", validateDonation, donationController.createDonation);
 // app.put("/donations/:id", validateDonation, donationController.updateDonation);

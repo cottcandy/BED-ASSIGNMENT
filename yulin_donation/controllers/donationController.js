@@ -1,13 +1,26 @@
 const Donation = require('../models/donation');
 
-const getAllDonationsByMemberID = async (req, res, next) => {
+const getAllDonations = async (req, res, next) => {
   try {
-    const memberID = req.params.memberID;
-    const donations = await Donation.getAllDonationsByMemberID(memberID);
+    const donations = await Donation.getAllDonations();
     res.json(donations);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to retrieve donations' });
+  }
+};
+
+const getDonationByID = async (req, res, next) => {
+  try {
+    const donationID = req.params.id; 
+    const donation = await Donation.getDonationByID(donationID);
+    if (!donation) {
+      return res.status(404).json({ message: `Donation with ID ${donationID} not found` });
+    }
+    res.json(donation);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to retrieve donation' });
   }
 };
 
@@ -35,7 +48,8 @@ const updateDonation = async (req, res, next) => {
 };
 
 module.exports = {
-  getAllDonationsByMemberID,
+  getAllDonations,
+  getDonationByID,
   createDonation,
   updateDonation,
 };

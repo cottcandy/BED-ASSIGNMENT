@@ -14,25 +14,65 @@ class Donation {
     this.newMemberID = newMemberID;
   }
 
-  static async getAllDonationsByMemberID(memberID) {
+  static async getDonationByID(donationID) {
+    try {
+        console.log(`Getting donation with ID: ${donationID}`);
+        const connection = await sql.connect(dbConfig);
+        const query = `
+          SELECT * FROM Donations WHERE DonationID = @donationID
+        `;
+        const result = await connection.request()
+          .input('DonationID', sql.Int, donationID)
+          .query(query);
+
+        console.log("Query executed successfully");
+        console.log("Result:", result.recordset);
+
+        if (result.recordset.length > 0) {
+            const row = result.recordset[0];
+            return new Donation(
+                row.DonationID, row.DonationAmount, row.DonationDate, row.NewEventID, row.EventType, row.EventDate, row.EventTime, row.EventLocation, row.NewMemberID
+            );
+        } else {
+            throw new Error(`Donation with ID ${donationID} not found`);
+        }
+    } catch (error) {
+        console.error(`Error retrieving donation: ${error.message}`);
+        throw new Error(`Error retrieving donation: ${error.message}`);
+    } finally {
+        await sql.close();
+    }
+  }
+
+  static async getAllDonations() {
     try {
       const connection = await sql.connect(dbConfig);
       const query = `
-        SELECT * FROM Donations WHERE NewMemberID = @memberID
+        SELECT *
+        FROM Donations
+        ORDER BY DonationDate DESC, DonationID ASC
       `;
-      const result = await connection.request()
-        .input('memberID', sql.VarChar, memberID)
-        .query(query);
-      
-      return result.recordset.map(row => new Donation(
-        row.DonationID, row.DonationAmount, row.DonationDate, row.NewEventID, row.EventType, row.EventDate, row.EventTime, row.EventLocation, row.NewMemberID
-      ));
+      const result = await connection.request().query(query);
+  
+      const donations = result.recordset.map(row => {
+        const { DonationID, DonationAmount, DonationDate, NewDonationID, EventType, NewMemberID } = row;
+        return new Donation(DonationID, DonationAmount, DonationDate, NewDonationID, EventType, NewMemberID);
+      });
+  
+      console.log("Query executed successfully");
+      console.log("Result:", donations);
+  
+      await sql.close(); // Close connection after successful query execution
+  
+      return donations;
     } catch (error) {
+      console.error(`Error retrieving donations: ${error.message}`);
       throw new Error(`Error retrieving donations: ${error.message}`);
     } finally {
-      await sql.close();
+      await sql.close(); // Ensure connection is always closed, even in case of error
     }
   }
+  
 
   static async createDonation(donationData) {
     try {
@@ -61,31 +101,7 @@ class Donation {
     }
   }
 
-  static async getDonationByID(donationID) {
-    try {
-      const connection = await sql.connect(dbConfig);
-      const query = `
-        SELECT * FROM Donations WHERE DonationID = @donationID
-      `;
-      const result = await connection.request()
-        .input('donationID', sql.Int, donationID)
-        .query(query);
-
-      if (result.recordset.length > 0) {
-        const row = result.recordset[0];
-        return new Donation(
-          row.DonationID, row.DonationAmount, row.DonationDate, row.NewEventID, row.EventType, row.EventDate, row.EventTime, row.EventLocation, row.NewMemberID
-        );
-      } else {
-        throw new Error(`Donation with ID ${donationID} not found`);
-      }
-    } catch (error) {
-      throw new Error(`Error retrieving donation: ${error.message}`);
-    } finally {
-      await sql.close();
-    }
-  }
-
+  
   static async updateDonation(donationID, donationData) {
     try {
       const connection = await sql.connect(dbConfig);
