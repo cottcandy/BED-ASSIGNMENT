@@ -7,7 +7,7 @@ const validateMember = (req, res, next) => {
     lastName: Joi.string().min(1).max(50).required(),
     memberPassword: Joi.string().min(6).max(12).required(),
     birthday: Joi.date().required(),
-    phoneNumber: Joi.string().min(7).max(20).required()
+    phoneNumber: Joi.string().min(7).max(8).required()
   });
 
   const validation = schema.validate(req.body, { abortEarly: false });

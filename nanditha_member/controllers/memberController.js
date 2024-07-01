@@ -1,10 +1,10 @@
-const Member = require("../models/member");
+const Member = require('../models/member');
 
-// Create Member 
+// Create Member
 const createMember = async (req, res) => {
     const memberData = req.body;
     try {
-        const createdMember = await Member.create(memberData);
+        const createdMember = await Member.createUser(memberData);
         res.status(201).json(createdMember);
     } catch (error) {
         console.error(error.message);
@@ -12,25 +12,22 @@ const createMember = async (req, res) => {
     }
 };
 
-// Login Member 
+// Login Member
 const loginMember = async (req, res) => {
     const { email, password } = req.body;
     try {
-        const member = await Member.login(email, password);
-        if (!member) {
-            return res.status(401).send("Invalid email or password");
-        }
+        const member = await Member.loginUser(email, password);
         res.json(member);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Error logging in member");
+        res.status(401).send(error.message); 
     }
 };
 
-// Get All Members 
+// Get All Members
 const getAllMembers = async (req, res) => {
     try {
-        const members = await Member.find();
+        const members = await Member.getAllUsers();
         res.json(members);
     } catch (error) {
         console.error(error.message);
@@ -42,14 +39,11 @@ const getAllMembers = async (req, res) => {
 const getMemberById = async (req, res) => {
     const memberId = req.params.id;
     try {
-        const member = await Member.findById(memberId);
-        if (!member) {
-            return res.status(404).send("Member not found");
-        }
+        const member = await Member.getUserById(memberId);
         res.json(member);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Error retrieving member");
+        res.status(404).send(error.message); 
     }
 };
 
@@ -58,10 +52,7 @@ const updateMember = async (req, res) => {
     const memberId = req.params.id;
     const newMemberData = req.body;
     try {
-        const updatedMember = await Member.findByIdAndUpdate(memberId, newMemberData, { new: true });
-        if (!updatedMember) {
-            return res.status(404).send("Member not found");
-        }
+        const updatedMember = await Member.updateUser(memberId, newMemberData);
         res.json(updatedMember);
     } catch (error) {
         console.error(error.message);
@@ -73,11 +64,12 @@ const updateMember = async (req, res) => {
 const deleteMember = async (req, res) => {
     const memberId = req.params.id;
     try {
-        const deletedMember = await Member.findByIdAndDelete(memberId);
-        if (!deletedMember) {
-            return res.status(404).send("Member not found");
+        const deleted = await Member.deleteUser(memberId);
+        if (deleted) {
+            res.status(204).send();
+        } else {
+            res.status(404).send("Member not found");
         }
-        res.status(204).send();
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Error deleting member");
